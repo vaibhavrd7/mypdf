@@ -1,0 +1,10 @@
+{
+  "name": "MyPDF — Free Image & PDF Tools",
+  "short_name": "MyPDF",
+  "description": "Convert, compress and resize images, and work with PDFs online.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#e94e48"
+}
+
