@@ -5,4 +5,3 @@ import App from './App.jsx';
 import './index.css';
 
 hydrateRoot(document.getElementById('root'), <React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>);
-
