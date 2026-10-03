@@ -1,0 +1,125 @@
+services:
+  - type: web
+    name: imageforge-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_ORIGIN
+        value: https://imageforge.onrender.com
+      - key: MAX_FILE_SIZE_MB
+        value: 15
+      - key: MAX_TOTAL_UPLOAD_MB
+        value: 40
+      - key: MAX_CONCURRENT_UPLOADS
+        value: 2
+      - key: TRUST_PROXY_HOPS
+        value: 1
+  - type: web
+    name: imageforge
+    runtime: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Permissions-Policy
+        value: camera=(), microphone=(), geolocation=()
+      - path: /*
+        name: Strict-Transport-Security
+        value: max-age=31536000
+    routes:
+      - type: rewrite
+        source: /jpg-to-webp
+        destination: /jpg-to-webp/index.html
+      - type: rewrite
+        source: /png-to-webp
+        destination: /png-to-webp/index.html
+      - type: rewrite
+        source: /webp-to-jpg
+        destination: /webp-to-jpg/index.html
+      - type: rewrite
+        source: /jpg-to-png
+        destination: /jpg-to-png/index.html
+      - type: rewrite
+        source: /compress-image
+        destination: /compress-image/index.html
+      - type: rewrite
+        source: /resize-image
+        destination: /resize-image/index.html
+      - type: rewrite
+        source: /privacy-policy
+        destination: /privacy-policy/index.html
+      - type: rewrite
+        source: /cookie-policy
+        destination: /cookie-policy/index.html
+      - type: rewrite
+        source: /terms-of-use
+        destination: /terms-of-use/index.html
+      - type: rewrite
+        source: /acceptable-use
+        destination: /acceptable-use/index.html
+      - type: rewrite
+        source: /disclaimer
+        destination: /disclaimer/index.html
+      - type: rewrite
+        source: /about
+        destination: /about/index.html
+      - type: rewrite
+        source: /contact
+        destination: /contact/index.html
+      - type: rewrite
+        source: /merge-pdf
+        destination: /merge-pdf/index.html
+      - type: rewrite
+        source: /split-pdf
+        destination: /split-pdf/index.html
+      - type: rewrite
+        source: /organize-pdf
+        destination: /organize-pdf/index.html
+      - type: rewrite
+        source: /compress-pdf
+        destination: /compress-pdf/index.html
+      - type: rewrite
+        source: /rotate-pdf
+        destination: /rotate-pdf/index.html
+      - type: rewrite
+        source: /watermark-pdf
+        destination: /watermark-pdf/index.html
+      - type: rewrite
+        source: /page-numbers-pdf
+        destination: /page-numbers-pdf/index.html
+      - type: rewrite
+        source: /image-to-pdf
+        destination: /image-to-pdf/index.html
+      - type: rewrite
+        source: /pdf-to-jpg
+        destination: /pdf-to-jpg/index.html
+      - type: rewrite
+        source: /crop-pdf
+        destination: /crop-pdf/index.html
+      - type: rewrite
+        source: /sign-pdf
+        destination: /sign-pdf/index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://imageforge-api.onrender.com
+      - key: VITE_SITE_URL
+        value: https://imageforge.onrender.com
+      - key: SITE_URL
+        value: https://imageforge.onrender.com
+      - key: GOOGLE_SITE_VERIFICATION
+        sync: false
